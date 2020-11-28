@@ -63,9 +63,7 @@ command! MakeTags !ctags -R .
 
 "Set autoident, and C filetype autoident
 set autoindent
-set cindent
-set shiftwidth=4    "Indent by 4 spaces when using >>, <<, == etc.
-set softtabstop=4   "Indent by 4 spaces when pressing <TAB>
+
 "Automatically inserts indentation in some cases
 set smartindent
 
@@ -86,6 +84,16 @@ let g:netrw_liststyle=3     " tree view
 " - :edit a folder to open a file browser
 " - <CR>/v/t to open in an h-split/v-split/tab
 " - check |netrw-browse-maps| for more mappings
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" C global options
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+augroup myCoptions
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=c
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Doxygen

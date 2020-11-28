@@ -18,14 +18,20 @@ setlocal foldmethod=marker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Normal mode remapings to speed edition
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 "Result: nnoremap <buffer> <leader> 
-nnoremap <buffer> <leader>n onnoremap <lt>buffer> <lt>leader><esc>kI"<esc>jA
+nnoremap <buffer> <leader>nn o<Esc>0Di"xxx<CR><BS>nnoremap <buffer> <lt>leader>
 
 "Create a section header
-nnoremap <buffer> <leader>sh o<esc>Do<esc>60i"<esc>yyppklDA
+nnoremap <buffer> <leader>sh o<Esc>0D60i"<Esc>yyppklDA
+
+"Insert the snippet for a function
+nnoremap <buffer> <leader>fun  o<Esc>0Di"xxx  {{{<Esc>
+                              \o<Esc>0Difunction!  ()<Esc>
+			      \o<Esc>0Diendfunction<Esc>
+			      \o<Esc>0Di"}}}<Esc>
+			      \2kt(
+
