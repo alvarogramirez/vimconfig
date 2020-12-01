@@ -62,10 +62,10 @@ command! MakeTags !ctags -R .
 " - Use ^n and ^p to go back and forth in the suggestion list
 
 "Set autoident, and C filetype autoident
-set autoindent
+"set autoindent
 
 "Automatically inserts indentation in some cases
-set smartindent
+"set smartindent
 
 "Load the plugins
 packloadall
