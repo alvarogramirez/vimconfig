@@ -49,7 +49,7 @@ let s:fileNameUpper = toupper(s:fileName)
 " Get file name
 let s:fileNameComplete = expand('%:t')
 
-
+"Write the header template in a h file
 let s:headerTemplate = "/**\<CR>@file\<Tab>\<Tab>".s:fileNameComplete."\<CR>"
 let s:headerTemplate = s:headerTemplate."@author\<Tab>\<Tab>Alvaro Ramirez\<CR>"
 let s:headerTemplate = s:headerTemplate."@date\<Tab>\<Tab>".strftime("%Y-%m-%d")."\<CR>"
@@ -116,6 +116,25 @@ let s:headerTemplate = s:headerTemplate."/\<Esc>79a*\<Esc>oEnd of file\<CR>"
 let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/"
 let s:headerTemplate = s:headerTemplate."\<Esc>gg"
 
+"Write the source template in a c file
+let s:sourceTemplate = "/**\<CR>@file\<Tab>\<Tab>".s:fileNameComplete."\<CR>"
+let s:sourceTemplate = s:sourceTemplate."@author\<Tab>\<Tab>Alvaro Ramirez\<CR>"
+let s:sourceTemplate = s:sourceTemplate."@date\<Tab>\<Tab>".strftime("%Y-%m-%d")."\<CR>"
+let s:sourceTemplate = s:sourceTemplate."@version\<Tab>\<Tab>v1.0\<CR>"
+let s:sourceTemplate = s:sourceTemplate."@brief TODO: BRIEF_DESCRIPTION\<CR>/\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."/\<Esc>79a*\<Esc>oIncludes\<CR>"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."#include \"".s:fileName.".h\"\<Tab>\<Tab>/*!< Always include header with the same name. */\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."/\<Esc>79a*\<Esc>oLocal Variables\<CR>"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."/\<Esc>79a*\<Esc>oFunction Prototypes\<CR>"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."/\<Esc>79a*\<Esc>oFunction Definitions\<CR>"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>\<CR>\<CR>"
+let s:sourceTemplate = s:sourceTemplate."/\<Esc>79a*\<Esc>oEnd of file\<CR>"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>77a*\<Esc>A/"
+let s:sourceTemplate = s:sourceTemplate."\<Esc>gg"
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Local functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -141,8 +160,15 @@ endfunction
 "Function to create the header skeleton
 function! <SID>CreateHeader() 
     if (s:BufferIsEmpty())
-        exec "normal! i".s:headerTemplate
-    endi
+	let l:fileExtension = expand('%:e')
+	if (l:fileExtension == 'h')	
+		exec "normal! i".s:headerTemplate
+	elseif (l:fileExtension == 'c')
+		exec "normal! i".s:sourceTemplate
+	else
+		echo "Could not identify the file extension."	
+	endif
+    endif
 endfunction 
 
 
@@ -152,6 +178,6 @@ endfunction
 "Shortcuts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-command! -nargs=0 AddHeader :call <SID>CreateHeader()
+command! -nargs=0 AddTemplate :call <SID>CreateHeader()
 
 
