@@ -63,10 +63,13 @@ command! MakeTags !ctags -R .
 
 "Set autoident, and C filetype autoident
 "set autoindent
-
+"set cindent
 "Automatically inserts indentation in some cases
 "set smartindent
-
+"set softtabstop=4
+set tabstop=4
+set shiftwidth=4
+set expandtab
 "Load the plugins
 packloadall
 
@@ -102,3 +105,8 @@ augroup END
 let g:DoxygenToolkit_authorName="Alvaro Ramirez"
 let g:DoxygenToolkit_licenseTag="This is a test"
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Awasome shortcuts
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"xxx
+nnoremap <leader>oo 2o<Esc>k
