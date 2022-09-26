@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/alvaro/Emili/IoT_Scanner_Documents/Emili_Source_code/GCC/gcc_sandbox/string_split'
+let g:netrw_dirhist_4='/home/alvaro/Microcontroller/MyLibraries'
+let g:netrw_dirhist_3='/mnt/Datos2/PHD_Backups/PhD/Programs_Micros/STM32F303RE/AR_HAL_Test_Programs/AR_HAL_HD44780/MDK/middleware/driver'
+let g:netrw_dirhist_2='/home/alvaro'
+let g:netrw_dirhist_1='/'

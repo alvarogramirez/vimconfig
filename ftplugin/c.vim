@@ -36,6 +36,14 @@ highlight colorColumn ctermbg=red
 "Insert a header to clearly identify a section of code
 nnoremap <buffer> <leader>sh o<Esc>0Di/<Esc>79a*<Esc>o<CR><Esc>77a*<Esc>A/<CR><Esc>kkA
 
+
+"Add #include line with dox comment
+nnoremap <buffer> <leader>in" o<Esc>0Di#include ".h"<Tab><Tab>/*!< */<Esc>0f.i
+nnoremap <buffer> <leader>in< o<Esc>0Di#include <.h><Tab><Tab>/*!< */<Esc>0f.i
+nnoremap <buffer> <leader>def o<Esc>0Di#define <Tab><Tab>/*!< */<Esc>0f i 
+"Add element dox comment
+nnoremap <buffer> <leader>el  A<Tab>/*!<  */<Esc>T<li 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Local variables
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -67,7 +75,7 @@ let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."Delete Ex if not use\<CR>#include <stdint.h> /*!< Necessary to use Fixed-Width Integers */\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."/\<Esc>79a*\<Esc>oC++ guards\<CR>"
 let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
-let s:headerTemplate = s:headerTemplate."#ifdef __cplusplus\<CR>extern \"C\"{//}<--Prevent indent\<CR>#endif\<CR>tmp\<Esc>0Di\<CR>"
+let s:headerTemplate = s:headerTemplate."#ifdef __cplusplus\<CR>extern \"C\"{//}<--Prevent indent\<CR>\<CR>#endif\<CR>tmp\<Esc>0Di\<CR>"
 let s:headerTemplate = s:headerTemplate."/\<Esc>79a*\<Esc>oDefines Constants\<CR>"
 let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."/**\<CR>@addtogroup "."xFileName"."_defines "."xFileUpper"." definitions\<CR>"
@@ -93,7 +101,7 @@ let s:headerTemplate = s:headerTemplate."/*End of "."xFileName"."_Functions */\<
 let s:headerTemplate = s:headerTemplate."/**\<CR>@}\<CR>/\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."/\<Esc>79a*\<Esc>oC++ guards\<CR>"
 let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
-let s:headerTemplate = s:headerTemplate."#ifdef __cplusplus\<CR>}\<CR>#endif\<CR>\<CR>"
+let s:headerTemplate = s:headerTemplate."#ifdef __cplusplus\<CR>}\<CR>\<CR>#endif\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."/\<Esc>79a*\<Esc>oEnd of Doxygen groups\<CR>"
 let s:headerTemplate = s:headerTemplate."\<Esc>77a*\<Esc>A/\<CR>\<CR>"
 let s:headerTemplate = s:headerTemplate."/*End of "."xFileName"." group*/\<CR>"
@@ -173,6 +181,22 @@ function! <SID>TypedefEnum ()
 endfunction
 "}}}
 
+"Insert a tydef struct asking the name and adding the filename {{{
+"Todo, add doxygen comments
+function! <SID>TypedefStruct ()
+	let l:tStructName = input("typedef struct name: ")
+	let l:tStructName = toupper(expand('%:t:r'))."_".l:tStructName
+	let l:todo = "/**\<CR>@brief ".tolower(l:tStructName)." structure \<CR>"
+	let l:todo = l:todo."\<CR>/\<CR>"
+	let l:todo = l:todo."typedef struct\<CR>{\<CR>"
+	let l:todo = l:todo . " \<Tab>\<Tab>;\<Tab>/*!< */\<CR>"
+	let l:todo = l:todo."}".tolower(l:tStructName)."_t;\<CR>\<Esc>kki\<Tab>"
+	exec "normal! i".l:todo
+endfunction
+"}}}
+
+
+
 "Function to create the header skeleton {{{
 function! <SID>CreateTemplate() 
     if (s:BufferIsEmpty())
@@ -197,3 +221,11 @@ endfunction
 command! -nargs=0 AddTemplate :call <SID>CreateTemplate()
 
 command! -nargs=0 Tenum :call <SID>TypedefEnum()
+
+command! -nargs=0 Tstruct :call <SID>TypedefStruct()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Abbreviations
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
