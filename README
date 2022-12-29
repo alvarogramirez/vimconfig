@@ -1,2 +1,3 @@
 This is my vim configuration files, plugins and templates
-put the repo in the .vim folder, also init submoduleshttps://github.com/alvarogramirez/vimconfig/blob/main/README
+put the repo in the .vim folder, also init submodules
+git clone repo_address ~/.vim
